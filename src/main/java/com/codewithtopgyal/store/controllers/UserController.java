@@ -18,12 +18,7 @@ import java.util.Set;
 public class UserController {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-        // we will use lombok @AllArgsConstructor
-        //    public UserController(UserRepository userRepository) {
-        //        this.userRepository = userRepository;
-        //    }
 
-    // change return type method from list to Iterable
 //    @RequestMapping("/users")
     @GetMapping  // alias for @RequestMapping
     public Iterable<UserDto> getAllUsers(
@@ -44,12 +39,14 @@ public class UserController {
     public ResponseEntity<UserDto> getUser(@PathVariable Long id ){
         var user =  userRepository.findById(id).orElse(null);
         if(user == null){
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // one way
             return ResponseEntity.notFound().build(); // cleaner way
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // one way
         }
-//        return new  ResponseEntity<>(user, HttpStatus.OK);
-//        var userDto = new UserDto(user.getId(), user.getName(), user.getEmail());
         return ResponseEntity.ok(userMapper.toDto(user)); // cleaner
+//       return new  ResponseEntity<>(user, HttpStatus.OK);
+//        var userDto = new UserDto(user.getId(), user.getName(), user.getEmail());
+
+        
     }
 
 }

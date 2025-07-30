@@ -1,5 +1,6 @@
 package com.codewithtopgyal.store.controllers;
 
+import com.codewithtopgyal.store.dtos.RegisterUserRequest;
 import com.codewithtopgyal.store.dtos.UserDto;
 import com.codewithtopgyal.store.entities.User;
 import com.codewithtopgyal.store.mappers.UserMapper;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Set;
 
@@ -44,9 +46,20 @@ public class UserController {
         }
         return ResponseEntity.ok(userMapper.toDto(user)); // cleaner
 //       return new  ResponseEntity<>(user, HttpStatus.OK);
-//        var userDto = new UserDto(user.getId(), user.getName(), user.getEmail());
+//        var userDto = new UserDto(user.getId(), user.getName(), user.getEmail())
+    }
 
-        
+    @PostMapping
+    public ResponseEntity<UserDto> createUser(
+            @RequestBody RegisterUserRequest request,
+            UriComponentsBuilder uriBuilder
+            ){
+        var user = userMapper.toEntity(request);
+        userRepository.save(user);
+
+        var userDto = userMapper.toDto(user);
+        var uri = uriBuilder.path("/users/{id}").buildAndExpand(userDto.getId()).toUri();
+        return ResponseEntity.created(uri).body(userDto);
     }
 
 }

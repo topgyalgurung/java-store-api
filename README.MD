@@ -84,13 +84,27 @@ Build and deploy a full-featured e-commerce backend from scratch using Spring Bo
 Use Postman to test live endpoints. Example:
 
 ```bash
-GET /api/users
-GET /api/users/1
-GET /api/user?sort=name
-POST /api/users
-GET /api/products
-GET /api/products?categoryId=1
+GET /users
+GET /users/1
+GET /user?sort=name
+POST /users
+GET /products
+GET /products?categoryId=1
+PUT /users/1 
+  - body: {name: "Topgyal", email:"topgyal@gmail.com"}
+PUT /users/100
+  - 404 Not Found
+DELETE /users/1
+- success: 204 No Content
+DELETE /users/100
+- fail: 404 Not Found
 ```
+> **⚠️ NOTE:** The current implementation uses plain text passwords for development purposes only. This will be replaced with secure password hashing in future updates as the project progresses.
+## Shortcuts for Intellij
+- Cmd + R - to run app
+- Cmd + Shift + O - to search files 
+- Cmd + N - Add Dependency 
+- etc
 
 <!-- Use headers for auth:
 

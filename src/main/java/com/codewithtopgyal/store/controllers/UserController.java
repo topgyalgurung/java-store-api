@@ -66,21 +66,24 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> updateUser(
             @PathVariable(name = "id") Long id,
-            @RequestBody UpdateUserRequest request){
-           var user = userRepository.findById(id).orElse(null);
-           if(user == null){
-               return ResponseEntity.notFound().build();
-           }
-           // if user exists, update with data in our request
+            @RequestBody UpdateUserRequest request) {
+        var user = userRepository.findById(id).orElse(null);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+        // if user exists, update with data in our request
         userMapper.update(request, user);
         userRepository.save(user);
         return ResponseEntity.ok(userMapper.toDto(user));
-        // one way manual mapping, only suitable for small object
-//            user.setName(request.getName());
-//           user.setEmail(request.getEmail());
-//
-
-
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id){
+        var user = userRepository.findById(id).orElse(null);
+        if(user == null){
+            return ResponseEntity.notFound().build();
+        }
+        userRepository.delete(user);
+        return ResponseEntity.noContent().build();
+    }
 }

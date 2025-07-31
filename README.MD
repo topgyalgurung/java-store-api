@@ -94,6 +94,10 @@ PUT /users/1
   - body: {name: "Topgyal", email:"topgyal@gmail.com"}
 PUT /users/100
   - 404 Not Found
+DELETE /users/1
+- success: 204 No Content
+DELETE /users/100
+- fail: 404 Not Found
 ```
 
 ## Shortcuts for Intellij

@@ -1,6 +1,7 @@
 package com.codewithtopgyal.store.controllers;
 
 import com.codewithtopgyal.store.dtos.RegisterUserRequest;
+import com.codewithtopgyal.store.dtos.UpdateUserRequest;
 import com.codewithtopgyal.store.dtos.UserDto;
 import com.codewithtopgyal.store.entities.User;
 import com.codewithtopgyal.store.mappers.UserMapper;
@@ -60,6 +61,26 @@ public class UserController {
         var userDto = userMapper.toDto(user);
         var uri = uriBuilder.path("/users/{id}").buildAndExpand(userDto.getId()).toUri();
         return ResponseEntity.created(uri).body(userDto);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDto> updateUser(
+            @PathVariable(name = "id") Long id,
+            @RequestBody UpdateUserRequest request){
+           var user = userRepository.findById(id).orElse(null);
+           if(user == null){
+               return ResponseEntity.notFound().build();
+           }
+           // if user exists, update with data in our request
+        userMapper.update(request, user);
+        userRepository.save(user);
+        return ResponseEntity.ok(userMapper.toDto(user));
+        // one way manual mapping, only suitable for small object
+//            user.setName(request.getName());
+//           user.setEmail(request.getEmail());
+//
+
+
     }
 
 }

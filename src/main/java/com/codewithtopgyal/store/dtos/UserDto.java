@@ -15,7 +15,7 @@ public class UserDto {
 //    @JsonIgnore  - to ignore field
 //    @JsonProperty("user_id") - rename
     private Long id;
-    private String username;
+    private String name;
     private String email;
 //    @JsonInclude(JsonInclude.Include.NON_NULL)
 //    private String phoneNumber;

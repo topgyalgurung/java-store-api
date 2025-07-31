@@ -104,9 +104,6 @@ public class UserController {
 //        we should use our mapper only dealing with mapping large complex objects
         user.setPassword(request.getNewPassword());
         userRepository.save(user);
-
         return ResponseEntity.noContent().build();
-
-
     }
 }

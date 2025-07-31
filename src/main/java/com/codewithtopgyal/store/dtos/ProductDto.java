@@ -3,6 +3,7 @@ package com.codewithtopgyal.store.dtos;
 import lombok.Data;
 
 import java.math.BigDecimal;
+
 @Data
 public class ProductDto {
     private Long id;

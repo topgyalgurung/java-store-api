@@ -1,5 +1,6 @@
 package com.codewithtopgyal.store.controllers;
 
+import com.codewithtopgyal.store.dtos.ChangePasswordRequest;
 import com.codewithtopgyal.store.dtos.RegisterUserRequest;
 import com.codewithtopgyal.store.dtos.UpdateUserRequest;
 import com.codewithtopgyal.store.dtos.UserDto;
@@ -85,5 +86,27 @@ public class UserController {
         }
         userRepository.delete(user);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/change-password")
+    public ResponseEntity<Void> changePassword(
+            @PathVariable Long id,
+            @RequestBody ChangePasswordRequest request
+    ){
+        var user = userRepository.findById(id).orElse(null);
+        if(user == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        if (!user.getPassword().equals(request.getOldPassword())) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+//        we should use our mapper only dealing with mapping large complex objects
+        user.setPassword(request.getNewPassword());
+        userRepository.save(user);
+
+        return ResponseEntity.noContent().build();
+
+
     }
 }

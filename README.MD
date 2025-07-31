@@ -99,7 +99,7 @@ DELETE /users/1
 DELETE /users/100
 - fail: 404 Not Found
 ```
-
+> **⚠️ NOTE:** The current implementation uses plain text passwords for development purposes only. This will be replaced with secure password hashing in future updates as the project progresses.
 ## Shortcuts for Intellij
 - Cmd + R - to run app
 - Cmd + Shift + O - to search files 
